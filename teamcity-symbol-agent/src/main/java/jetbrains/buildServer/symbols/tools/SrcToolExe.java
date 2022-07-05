@@ -21,6 +21,7 @@ import java.io.File;
 import jetbrains.buildServer.ExecResult;
 import jetbrains.buildServer.SimpleCommandLineProcessRunner;
 import jetbrains.buildServer.agent.BuildProgressLogger;
+import jetbrains.buildServer.symbols.LongRunningProcessRunCallback;
 
 public class SrcToolExe {
 
@@ -42,7 +43,7 @@ public class SrcToolExe {
 
     buildLogger.message(String.format("Running command %s", commandLine.getCommandLineString()));
 
-    final ExecResult execResult = SimpleCommandLineProcessRunner.runCommand(commandLine, null);
+    final ExecResult execResult = SimpleCommandLineProcessRunner.runCommand(commandLine, null,new LongRunningProcessRunCallback());
     if (execResult.getExitCode() < 0) {
       buildLogger.warning(String.format("%s completed with exit code %s.", SRCTOOL_EXE, execResult));
       buildLogger.warning("Stdout: " + execResult.getStdout());

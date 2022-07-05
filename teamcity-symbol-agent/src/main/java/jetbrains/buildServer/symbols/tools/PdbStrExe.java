@@ -19,6 +19,7 @@ package jetbrains.buildServer.symbols.tools;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import jetbrains.buildServer.ExecResult;
 import jetbrains.buildServer.SimpleCommandLineProcessRunner;
+import jetbrains.buildServer.symbols.LongRunningProcessRunCallback;
 
 import java.io.File;
 
@@ -48,6 +49,6 @@ public class PdbStrExe {
     commandLine.addParameter(String.format("%s:%s", PATH_TO_PDB_FILE_SWITCH, pdbFile.getAbsolutePath()));
     commandLine.addParameter(String.format("%s:%s", PATH_TO_INPUT_FILE_SWITCH, inputStreamFile.getAbsolutePath()));
     commandLine.addParameter(STREAM_NAME_SWITCH + ":" + streamName);
-    return SimpleCommandLineProcessRunner.runCommand(commandLine, null);
+    return SimpleCommandLineProcessRunner.runCommand(commandLine, null,new LongRunningProcessRunCallback());
   }
 }

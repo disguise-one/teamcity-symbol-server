@@ -20,6 +20,7 @@ import com.intellij.execution.configurations.GeneralCommandLine;
 import jetbrains.buildServer.ExecResult;
 import jetbrains.buildServer.SimpleCommandLineProcessRunner;
 import jetbrains.buildServer.agent.BuildProgressLogger;
+import jetbrains.buildServer.symbols.LongRunningProcessRunCallback;
 import jetbrains.buildServer.util.CollectionsUtil;
 import jetbrains.buildServer.util.FileUtil;
 
@@ -118,7 +119,7 @@ public class JetSymbolsExe {
 
   private ExecResult executeCommandLine(GeneralCommandLine commandLine, BuildProgressLogger buildLogger) {
     buildLogger.message(String.format("Running command %s", commandLine.getCommandLineString()));
-    final ExecResult execResult = SimpleCommandLineProcessRunner.runCommand(commandLine, null);
+    final ExecResult execResult = SimpleCommandLineProcessRunner.runCommand(commandLine, null,new LongRunningProcessRunCallback());
     if (execResult.getExitCode() != 0) {
       buildLogger.warning(String.format("%s completed with exit code %s.", SYMBOLS_EXE, execResult));
       buildLogger.warning("Stdout: " + execResult.getStdout());
